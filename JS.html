@@ -1,0 +1,201 @@
+<script>
+    window.addEventListener('load',cargaDatalists);
+    let wsOpcEdu="";
+    let datuaAsigna="";
+    let wDatuaAsigna=[];
+    let cveDocente="";
+    let nomDocente="";
+    let nomAsigAula="";
+    
+
+    function cargaDatalists()                       //DISPARA LA CARGA DE LOS DATALISTS
+    {
+        let elemenFocus=document.getElementById("datalistOpEdu");
+        elemenFocus.focus();
+        var opcEdu=cargaOpcEdu();
+
+    }
+
+    function cargaOpcEdu()                           //CARGA DATALIST OPC EDUCATIVA
+    {
+        google.script.run
+        .withSuccessHandler(cargaDatalistOpcEdu)
+        .withFailureHandler(proc=>{console.log("error al cargar el datalist Opc Edu")})
+        .obtieneOpcEdu()        //Obtiene datos de bd opc edu
+    }
+
+    function cargaDatalistOpcEdu(datuaOpcEdu)  //OBTIENE LOS DATOS CARGADOS DE BD PARA INCORPORARLOS A DATALIST
+    {
+        const inputOpcEdu=document.getElementById("datalistOpEdu"); //TOMA EL DATALIST Y LO CARGA EN UNA VARIABLE
+        datuaOpcEdu.sort()
+        datuaOpcEdu.forEach(ilara => {                              //USA CADA UNO DE LOS DATOS CARGADOS DE LA BD PARA ASIGNARLOS A CADA CAMPO DEL DATALIST, TAMBIEN SE PUEDEN ALMACENAR EN MEMEORIA LOS DATOS A USAR MAS TARDE
+            const opcionOE= document.createElement("option");   //CREA UN ELEMENTO OPTION PARA EL DATASET POR CADA FILA A USAR
+            opcionOE.value=ilara[0];                            //VALUE ES EL VALOR A USAR EN EL FORMULARIO
+            inputOpcEdu.appendChild(opcionOE);                  //CREA UN "HIJO" EN EL DATASET, O SEA UNA FILA
+        });
+        
+    }
+
+    function cargaCicloEsc()
+    {
+        var form1 =document.getElementById("formAulas");//obtiene los valores capturados en el formulario
+        wsOpcEdu =form1[0].value;                 //usa la primera opcion para validar el ciclo escolar de la OpEd   
+         
+        google.script.run
+        .withSuccessHandler(cargaDatalistCicloEsc)
+        .withFailureHandler(proc=>{console.log("error al cargar el datalist Ciclo Esc")})
+        .obtieneCicloEsc(wsOpcEdu)
+
+        cargaDatalistAsigna();
+    }
+
+    function cargaDatalistCicloEsc(datuaCicloEsc)
+    {
+        const inputCicloEsc=document.getElementById("datalistCicloEsc");
+        datuaCicloEsc.forEach(ilara=>{
+                const opcionCE=document.createElement("option");
+                opcionCE.value=ilara[0];
+                inputCicloEsc.appendChild(opcionCE);
+        })
+    }
+
+    function cargaDatalistAsigna()
+    {
+        google.script.run
+        .withSuccessHandler(cargaAsigna)
+        .withFailureHandler(proc=>{console.log("error al cargar el datalist de asignaturas")})
+        .obtieneAsignatura(wsOpcEdu)
+
+    }
+
+    
+
+    function cargaDatalistDocente()
+    {
+        var form2 = document.getElementById("formAulas");
+
+        google.script.run
+        .withSuccessHandler(cargaDocente)
+        .withFailureHandler(proc=>{console.log("error al cargar el datalist de Docente")})
+        .obtieneDocente()
+
+        cargaDatalistGrupo();
+    }
+
+    function cargaDocente(datuaDocente)
+    {
+        const inputDocente=document.getElementById("datalistDocente");
+        datuaDocente.forEach(ilara=>{
+            const opcionDocente=document.createElement("option");
+            opcionDocente.value=ilara[0];
+            inputDocente.appendChild(opcionDocente);
+        })
+    }
+
+
+    function cargaDatalistGrupo()
+    {
+        var form3=document.getElementById("formAulas");
+
+        google.script.run
+        .withSuccessHandler(cargaGrupo)
+        .withFailureHandler(proc=>{console.log("error al cargar el datalist de Grupos")})
+        .obtieneGrupo(wsOpcEdu)
+    }
+
+    function cargaAsigna(datuaAsigna)
+    {
+        
+        const inputAsigna=document.getElementById("datalistAsigna");
+        datuaAsigna.forEach(ilara=>{
+            const opcionAsig=document.createElement("option");
+            opcionAsig.value=ilara[0]+" "+ilara[2];
+            wDatuaAsigna.push([ilara[0],ilara[19]]);      
+            inputAsigna.appendChild(opcionAsig);
+        })
+        
+
+    }
+
+   
+    function cargaGrupo(datuaGrupo)
+    {
+        
+        const inputGrupo1=document.getElementById("datalistGrupo1");
+        datuaGrupo.forEach(ilara=>{
+            const opcionGrupo1=document.createElement("option");
+            opcionGrupo1.value=ilara[0];
+            inputGrupo1.appendChild(opcionGrupo1);
+        })
+
+        const inputGrupo2=document.getElementById("datalistGrupo2");
+        datuaGrupo.forEach(ilara=>{
+            const opcionGrupo2=document.createElement("option");
+            opcionGrupo2.value=ilara[0];
+            inputGrupo2.appendChild(opcionGrupo2);
+        })
+
+        const inputGrupo3=document.getElementById("datalistGrupo3");
+        datuaGrupo.forEach(ilara=>{
+            const opcionGrupo3=document.createElement("option");
+            opcionGrupo3.value=ilara[0];
+            inputGrupo3.appendChild(opcionGrupo3);
+        })
+
+        const inputGrupo4=document.getElementById("datalistGrupo4");
+        datuaGrupo.forEach(ilara=>{
+            const opcionGrupo4=document.createElement("option");
+            opcionGrupo4.value=ilara[0];
+            inputGrupo4.appendChild(opcionGrupo4);
+        })
+
+        const inputGrupo5=document.getElementById("datalistGrupo5");
+        datuaGrupo.forEach(ilara=>{
+            const opcionGrupo5=document.createElement("option");
+            opcionGrupo5.value=ilara[0];
+            inputGrupo5.appendChild(opcionGrupo5);
+        })
+    }
+
+    function actualizaForm()        //REALIZE EL PROCESO DE IMPRESION DE LISTAS *************************
+    {
+        event.preventDefault();
+        let formSalida=[];
+        var form = document.getElementById("formAulas")
+       
+        formSalida.push(form[0].value,  //opc edu
+                    form[1].value,      //parcial
+                    form[2].value,      //ciclo
+                    form[3].value,      //Asignatura (clave y nombre)
+                    form[4].value,      //docente
+                    form[5].value,      //grupo 1
+                    form[6].value,      //grupo 2
+                    form[7].value,      //grupo 3
+                    form[8].value,      //grupo 4
+                    form[9].value       //grupo 5
+                    );
+        
+            google.script.run
+            .withFailureHandler(error=>{console.log("Error en los datos de aulas");wserror=1})
+            .withSuccessHandler(erroralcargar)
+            .seleccionaAulas(formSalida);   
+
+            /*google.script.run
+            .withFailureHandler(error=>{console.log("Error en los datos de aulas");wserror=1})
+            .withSuccessHandler(erroralcargar)
+            .procesoAula(aulasW);*/
+    }
+
+function erroralcargar(wserror)
+{  
+    if (wserror==1)
+    {
+      alert("   \n     ERROR EN EL PROCESO \n ****  NO COMPLETADO *****")
+    }
+    else
+    {
+      alert("**************************\n     . \n Cambios realizados, \nrecargue la página (F5)")
+    }
+    //document.getElementById("formAulas").reset()
+}
+</script>

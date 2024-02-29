@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es-mx">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+        <title>Registro de Aulas</title>
+        <?!= include('CSS') ?>
+    </head>
+    
+    <header>
+       <div class="encabeza">
+            <!-- <img src="https://drive.google.com/uc?export=view&id=1Pw5uCvha6Kg6h1XUtK41ufCc4nuaUCVy"alt="logo ceec svg">-->
+                
+            <h1 class="titulo" >Impresión de Listas</h1>
+      </div>
+    </header>
+    
+    <body>
+        <section >
+            <article>
+                 <p> Imprime listas de asistencia y medición </p>
+             </article>
+        </section>
+      <!-- DEFINE EL FORMULARIO --> 
+         
+        <form id="formAulas" autocomplete="on" onsubmit="actualiza(this)" ><!--nombre del formulario que almacena los datos-->
+            <div class="formulario">          
+                <div class="elemento1">
+                    <label for="opcEduDatalist" class="form-label">Opción Educativa:</label> 
+                </div>
+            
+                <div class="elemento1a"><!--lista desplegable de Opc Edu -->
+                  <!--  <label for="opcEduDatalist" class="form-label">Opción Educativa:</label> --> 
+                    <input list="datalistOpEdu" id="opcEduDatalist" placeholder="Selecciona Opción Educativa" class="form-control"  onchange="cargaCicloEsc()" size="50" required> 
+                <datalist id="datalistOpEdu">
+                </datalist>
+                </div>
+
+                <div class="elementoP">
+                    <label for="parcialDatalist" class="form-label">Parcial:</label>
+                </div>
+                <div class="elementoPa">
+                    <select class="form-select" aria-label="parcial" name="parcial" id="parcial">
+                        <option value="":></option>
+                        <option value="PRIMERO">Primero</option>
+                        <option value="SEGUNDO">Segundo</option>
+                        <option value="TERCERO">Tercero</option>
+                        <option value="FINAL">Final</option>
+                    </select>
+                </div>
+
+                <div class="elemento2" >
+                    <label for="cicloEscDatalist" class="form-label">Ciclo Escolar:</label>
+                </div>
+                <div class="elemento2a" ><!--lista desplegable de ciclo escolar -->
+                    <input list="datalistCicloEsc" id="cicloEscDatalist" placeholder="Selecciona ciclo escolar" type="text" size="30" required>
+                    <datalist id="datalistCicloEsc">
+                    </datalist>
+                </div>
+
+                <div class="elemento3">
+                    <label for="asignaDatalist" class="form-label">Asignatura:</label>
+                </div>
+                <div class="elemento3a">
+                    <input list="datalistAsigna" id="asignaDatalist" onchange="cargaDatalistDocente()" placeholder="Selecciona la asignatura" size="40" required>
+                    <datalist id="datalistAsigna">
+                    </datalist>
+                </div>
+
+                <div class="elemento4">
+                    <label for="docenteDatalist" class="form-label">Docente:</label>
+                </div>
+    
+                <div class="elemento4a"><!-- lista desplegable docente-->
+                    <input list="datalistDocente" id="docenteDatalist" placeholder="Selecciona docente" size="50" required>
+                    <datalist id="datalistDocente">
+                    </datalist>
+                </div>
+                <br>
+               <!-- <div class="elemento5">
+                    <label for="grupo" class="form-label">Grupo</label>
+                </div>
+            
+                <div class="elemento6">
+                    <label for="subgrupo" class="form-label">Sub</label>
+                </div>
+                -->    
+                <div class="elemento5a"><!-- grupo  -->
+                 <!--   <label for="grupo" class="form-label">Grupo</label><br> -->
+                    <label  class="form-label">Grupo</label><br>
+                    <input list="datalistGrupo1" id="grupo1" size="5" required> <br>
+                    <datalist id="datalistGrupo1"></datalist>
+                    <input list="datalistGrupo2" id="grupo2" size="5" required> <br>
+                    <datalist id="datalistGrupo2"></datalist>
+                    <input list="datalistGrupo3" id="grupo3" size="5" required> <br>
+                    <datalist id="datalistGrupo3"></datalist>
+                    <input list="datalistGrupo4" id="grupo4" size="5" required> <br>
+                    <datalist id="datalistGrupo4"></datalist>
+                    <input list="datalistGrupo5" id="grupo5" size="5" required> <br>
+                    <datalist id="datalistGrupo5"></datalist>
+                </div>
+                <!--
+                <div class="elemento6a"><!--Sub grupo ->
+                    <label for="subgrupo" class="form-label">Sub</label><br>
+                    <input id="sub1" size="3" pattern="[A-E]{1}" maxlength="1" required> <br><!-- PATRON DE INPUT SOLO TEXTO 1 POSICION->
+                    <input id="sub2" size="3" pattern="[A-E]{1}" maxlength="1"> <br>
+                    <input id="sub3" size="3" pattern="[A-E]{1}" maxlength="1"> <br>
+                    <input id="sub4" size="3" pattern="[A-E]{1}" maxlength="1"> <br>
+                    <input id="sub5" size="3" pattern="[A-E]{1}" maxlength="1"> <br>
+                </div>
+            -->
+                
+
+            </div>     
+        </form> 
+      
+        <br>
+      <button type="button" class="button" onclick="actualizaForm()">Actualizar</button>
+
+      <footer class="pie_pagina">
+        <small>
+            <address>
+                Armada de México 1394 Col. Residencial Cafetales
+            </address>
+        </small>
+    </footer>  
+
+    <?!= include('JS') ?>
+             
+    </body>
+</html>
+   
